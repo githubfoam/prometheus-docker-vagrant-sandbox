@@ -191,20 +191,6 @@ systemctl enable containerd.service
 
 SCRIPT
 
-$kalisandbox_script = <<-SCRIPT
-echo I am provisioning...
-date > /etc/vagrant_provisioned_at
-
-echo "192.168.50.5 vg-kali-04.local vg-kali-04" |sudo tee -a /etc/hosts
-echo "192.168.50.6 vg-kali-05.local vg-kali-05" |sudo tee -a /etc/hosts
-cat /etc/hosts
-echo "nameserver 8.8.8.8" |sudo tee -a /etc/resolv.conf
-cat /etc/resolv.conf
-
-# https://hub.docker.com/r/vulnerables/web-dvwa
-docker run --rm -it -p 80:80 vulnerables/web-dvwa 
-
-SCRIPT
 
 Vagrant.configure("2") do |config|
 
@@ -230,6 +216,7 @@ Vagrant.configure("2") do |config|
       #bridged network,DHCP enabled,auto IP assignment
       # kalicluster.vm.network "public_network"
       kalicluster.vm.network "private_network", ip: "192.168.50.6"
+      # kalicluster.vm.network :public_network, ip: "192.168.1.99", bridge: "en0: Ethernet"
       # kalicluster.vm.network "forwarded_port", guest: 80, host: 81
       #Disabling the default /vagrant share can be done as follows:
       # kalicluster.vm.synced_folder ".", "/vagrant", disabled: true
@@ -251,10 +238,9 @@ Vagrant.configure("2") do |config|
       # end
 
       # kalicluster.vm.provision "shell",    inline: "hostnamectl set-hostname vg-kali-05"
-      # kalicluster.vm.provision "shell", inline: $ubuntu_docker_script
-      # kalicluster.vm.provision :shell, path: "provisioning/nfs_server.sh"
+      kalicluster.vm.provision "shell", inline: $ubuntu_docker_script
       kalicluster.vm.provision :shell, path: "provisioning/prometheus.sh"
-      # kalicluster.vm.provision :shell, path: "provisioning/bootstrap.sh"
+      kalicluster.vm.provision :shell, path: "provisioning/bootstrap.sh"
 
     end 
 
@@ -285,7 +271,6 @@ Vagrant.configure("2") do |config|
       end
       # kalicluster.vm.provision "shell",    inline: "hostnamectl set-hostname vg-kali-05"
       kalicluster.vm.provision "shell", inline: $ubuntu_docker_script
-      # kalicluster.vm.provision :shell, path: "provisioning/nfs_client_ubuntu.sh"
       kalicluster.vm.provision :shell, path: "provisioning/prometheus.sh"
       kalicluster.vm.provision :shell, path: "provisioning/bootstrap.sh"
 
@@ -315,7 +300,6 @@ Vagrant.configure("2") do |config|
       end
       # kalicluster.vm.provision "shell",    inline: "hostnamectl set-hostname vg-kali-05"
       # kalicluster.vm.provision "shell", inline: $centos_stream_docker_script
-      # kalicluster.vm.provision :shell, path: "provisioning/nfs_client_centos.sh"
       # kalicluster.vm.provision :shell, path: "provisioning/prometheus_st.sh"
       kalicluster.vm.provision :shell, path: "provisioning/bootstrap.sh"
 
