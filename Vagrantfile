@@ -251,10 +251,9 @@ Vagrant.configure("2") do |config|
       # end
 
       # kalicluster.vm.provision "shell",    inline: "hostnamectl set-hostname vg-kali-05"
-      # kalicluster.vm.provision "shell", inline: $ubuntu_docker_script
-      # kalicluster.vm.provision :shell, path: "provisioning/nfs_server.sh"
+      kalicluster.vm.provision "shell", inline: $ubuntu_docker_script
       kalicluster.vm.provision :shell, path: "provisioning/prometheus.sh"
-      # kalicluster.vm.provision :shell, path: "provisioning/bootstrap.sh"
+      kalicluster.vm.provision :shell, path: "provisioning/bootstrap.sh"
 
     end 
 
@@ -284,9 +283,8 @@ Vagrant.configure("2") do |config|
           vb.gui = false
       end
       # kalicluster.vm.provision "shell",    inline: "hostnamectl set-hostname vg-kali-05"
-      kalicluster.vm.provision "shell", inline: $ubuntu_docker_script
-      # kalicluster.vm.provision :shell, path: "provisioning/nfs_client_ubuntu.sh"
-      kalicluster.vm.provision :shell, path: "provisioning/prometheus.sh"
+      # kalicluster.vm.provision "shell", inline: $ubuntu_docker_script
+      kalicluster.vm.provision :shell, path: "provisioning/prom_sa.sh"
       kalicluster.vm.provision :shell, path: "provisioning/bootstrap.sh"
 
     end     
@@ -315,7 +313,6 @@ Vagrant.configure("2") do |config|
       end
       # kalicluster.vm.provision "shell",    inline: "hostnamectl set-hostname vg-kali-05"
       # kalicluster.vm.provision "shell", inline: $centos_stream_docker_script
-      # kalicluster.vm.provision :shell, path: "provisioning/nfs_client_centos.sh"
       # kalicluster.vm.provision :shell, path: "provisioning/prometheus_st.sh"
       kalicluster.vm.provision :shell, path: "provisioning/bootstrap.sh"
 
