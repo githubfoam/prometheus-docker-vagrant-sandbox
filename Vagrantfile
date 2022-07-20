@@ -225,19 +225,7 @@ Vagrant.configure("2") do |config|
           vb.memory = "768"
           vb.gui = false          
       end
-      #storage testing block      
-      # kalicluster.vm.provider "virtualbox" do |vb|
-      #   if !File.exist?("nfs01.vdi")
-      #       vb.customize ["createhd", "--filename", "nfs01.vdi", "--size", 8192, "--variant", "Fixed"]
-      #       vb.customize ["modifyhd", "nfs01.vdi", "--type", "shareable"]
-      #   end
-      #   # This command attaches, modifies, and removes a storage medium connected to a storage controller 
-      #   # that was previously added with the storagectl command.
-      #   # https://www.virtualbox.org/manual/ch08.html#vboxmanage-storageattach
-      #   vb.customize ["storageattach", :id, "--storagectl", "sata", "--port", 1, "--device", 0, "--type", "hdd", "--medium", "nfs01.vdi"]         
-      # end
-
-      # kalicluster.vm.provision "shell",    inline: "hostnamectl set-hostname vg-kali-05"
+       # kalicluster.vm.provision "shell",    inline: "hostnamectl set-hostname vg-kali-05"
       kalicluster.vm.provision "shell", inline: $ubuntu_docker_script
       kalicluster.vm.provision :shell, path: "provisioning/prometheus.sh"
       kalicluster.vm.provision :shell, path: "provisioning/bootstrap.sh"

@@ -1,6 +1,6 @@
 # prometheus-docket-vagrant-sandbox
 ~~~~
-vagrant ssh destroy -f
+vagrant destroy -f
 
 >vagrant up vg-ubuntu-01
 

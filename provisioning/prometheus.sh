@@ -13,7 +13,7 @@ cd /vagrant/prometheus
 pwd
 
 #multiple IP issues
-HOST_SECOND_IP=$(hostname -I | awk '{print $2}') # get second IP IP address of server
+HOST_SECOND_IP=$(hostname -I | awk '{print $2}') # get second IP address of server
 echo $HOST_SECOND_IP
 
 
